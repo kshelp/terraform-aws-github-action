@@ -4,7 +4,7 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
-  security-events: read
+  security-events: write   # v4 SARIF 업로드 권한 필수
 
 on:
   push:
@@ -35,9 +35,11 @@ jobs:
           sarif_upload: true
 
       - name: Upload SARIF file
+        if: github.repository_owner == github.actor  # fork PR이면 업로드 스킵
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: terrascan.sarif  
+          sarif_file: terrascan.sarif
+          wait-for-processing: true
 
   Terraform:
     needs: SCAN
