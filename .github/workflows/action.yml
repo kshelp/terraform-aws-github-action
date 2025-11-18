@@ -4,7 +4,7 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
-  security-events: write   # v4 SARIF 업로드 권한 필수
+  security-events: write # v4 SARIF 업로드 권한 필수
 
 on:
   push:
@@ -24,18 +24,18 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-        
+
       - name: Run Terrascan
         id: terrascan
         uses: tenable/terrascan-action@main
         with:
-          iac_type: 'terraform'
-          policy_type: 'aws'
+          iac_type: "terraform"
+          policy_type: "aws"
           only_warn: true
           sarif_upload: true
 
       - name: Upload SARIF file
-        if: github.repository_owner == github.actor  # fork PR이면 업로드 스킵
+        if: github.repository_owner == github.actor # fork PR이면 업로드 스킵
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: terrascan.sarif
