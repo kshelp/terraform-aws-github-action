@@ -4,6 +4,7 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
+  security-events: read
 
 on:
   push:
@@ -34,7 +35,7 @@ jobs:
           sarif_upload: true
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: terrascan.sarif  
 
